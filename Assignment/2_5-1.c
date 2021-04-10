@@ -38,13 +38,13 @@ int main() {
     int i;
     while(1) {
         for(i = 1; i <= 4; i++) {
-            MotorControl(LEFT_ROTATE, 32 * j);
+            MotorControl(LEFT_ROTATE, 32 * i);
             delay(2000);
             MotorStop();
             delay(2000);
         }
         for(i = 4; i >= 1; i--) {
-            MotorControl(RIGHT_ROTATE, 32 * j);
+            MotorControl(RIGHT_ROTATE, 32 * i);
             delay(2000);
             MotorStop();
             delay(2000);
