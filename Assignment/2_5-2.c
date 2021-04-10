@@ -1,18 +1,21 @@
 #include<wiringPi.h>
 #include<softPwm.h>
 
-#define LED_PIN 4
-
-#define LED_ON  1
-#define LED_OFF 0
+const int LED[8] = { 4, 17, 18, 27, 22, 23, 24, 25 };
+#define LED_PIN	4
 
 void init() {
+    int i;
+    for(i = 1; i < 8; i++) {
+	pinMode(LED[i], OUTPUT);
+	digitalWrite(LED[i], LOW);
+    }
     pinMode(LED_PIN, OUTPUT);
     softPwmCreate(LED_PIN, 0, 128);
 }
 
 void MotorControl(int light) {
-    softPwmCreate(LED_PIN, light);
+    softPwmWrite(LED_PIN, light);
 }
 
 int main() {
