@@ -28,8 +28,8 @@ int main() {
     pinMode(MOTOR_MT_N_PIN, OUTPUT);
     pinMode(MOTOR_MT_P_PIN, OUTPUT);
 
-    softPwmWrite(MOTOR_MT_N_PIN, 0, 100);
-    softPwmWrite(MOTOR_MT_P_PIN, 0, 100);
+    softPwmCreate(MOTOR_MT_N_PIN, 0, 100);
+    softPwmCreate(MOTOR_MT_P_PIN, 0, 100);
 
     int i;
     while(1) {
