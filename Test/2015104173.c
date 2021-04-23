@@ -83,6 +83,8 @@ int main() {
 	unsigned long current = millis();
 	int second[6] = { 0, 0, 0, 0, 0, 0 };
 
+    int keypad = -1;
+
     init();
 
     while(1) {
@@ -107,8 +109,8 @@ int main() {
                 delay(1);
             }
         } else if(keypad == 2) {
-            second = { 0, 0, 0, 0, 0, 0 };
             for(pos = 0; pos < 6; pos++) {
+                second[pos] = 0;
                 FndDisplay(pos, second[pos]);
                 delay(1);
             }
