@@ -7,6 +7,7 @@ const int FndPin[8] = { 6, 12, 13, 16, 19, 20, 26, 21 };
 const int FndFont[10] = { 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x67 };
 
 const int Keypad[3] = { 11, 9, 10 };
+static int nowKeypad = -1;
 
 void init() {
 	if(wiringPiSetupGpio() == -1) {
@@ -63,33 +64,29 @@ void FndDisplay(int position, int number) {
 	FndSelect(position);
 }
 
-int KeypadRead() {
+void KeypadRead() {
     int i;
-    static int keypad = -1;
 
     for(i = 0; i < 3; i++) {
         if(!digitalRead(Keypad[i])) {
-            keypad = i;
+            nowKeypad = i;
             break;
         }
     }
-
-    return keypad;
 }
 
 int main() {
     int pos;
-
-	unsigned long current = millis();
 	int second[6] = { 0, 0, 0, 0, 0, 0 };
-
-    int keypad = -1;
 
     init();
 
+    bool isWorking = false;
+
     while(1) {
-        keypad = KeypadRead();
-        if(keypad == 0) {
+        if(nowKeypad == 0) {
+            isWorking = true;
+
             for(pos = 0; pos < 6; pos++) {
                 FndDisplay(pos, second[pos]);
                 delay(1);
@@ -103,17 +100,26 @@ int main() {
                     second[pos] = 0;
                 }
             }
-        } else if(keypad == 1) {
+
+            KeypadRead();
+        } else if(nowKeypad == 1) {
+            isWorking = false;
+
             for(pos = 0; pos < 6; pos++) {
                 FndDisplay(pos, second[pos]);
                 delay(1);
             }
-        } else if(keypad == 2) {
+
+            KeypadRead();
+        } else if(nowKeypad == 2) {
             for(pos = 0; pos < 6; pos++) {
                 second[pos] = 0;
                 FndDisplay(pos, second[pos]);
                 delay(1);
             }
+            if(isWorking)  nowKeypad = 0;
+            else    nowKeypad = 1;
+
         }
     }
 }
