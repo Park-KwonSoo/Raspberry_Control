@@ -81,11 +81,11 @@ int main() {
 
     init();
 
-    bool isWorking = false;
+    int isWorking = -1;
 
     while(1) {
         if(nowKeypad == 0) {
-            isWorking = true;
+            isWorking = 1;
 
             for(pos = 0; pos < 6; pos++) {
                 FndDisplay(pos, second[pos]);
@@ -103,7 +103,7 @@ int main() {
 
             KeypadRead();
         } else if(nowKeypad == 1) {
-            isWorking = false;
+            isWorking = 0;
 
             for(pos = 0; pos < 6; pos++) {
                 FndDisplay(pos, second[pos]);
@@ -117,8 +117,8 @@ int main() {
                 FndDisplay(pos, second[pos]);
                 delay(1);
             }
-            if(isWorking)  nowKeypad = 0;
-            else    nowKeypad = 1;
+            if(isWorking == 1)  nowKeypad = 0;
+            else if(isWorking == 0)    nowKeypad = 1;
 
         }
     }
